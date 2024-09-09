@@ -24,23 +24,132 @@ STEP 8: Use heatmap method of representation to show relationships between two v
 
 ## CODING AND OUTPUT
 ```
-Name: Aishwarya S
-Reg No: 212222100003
+Name : Aishwarya S
+Reg No : 212222100003
 ```
-     ![Screenshot 2024-09-03 181541](https://github.com/user-attachments/assets/2a254db3-5c69-44ae-a9d1-ee2850daf18a)
-![Screenshot 2024-09-03 181551](https://github.com/user-attachments/assets/b4b443e3-094f-4474-acd0-f8e45b282efd)
+```
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+dt=pd.read_csv("/content/titanic.csv")
+dt
+```
+![image](https://github.com/SanjithaBolisetti/EXNO2DS/assets/119393633/e06452cb-fff5-46d9-91e5-1e13daed721d)
 
-![Screenshot 2024-09-03 181559](https://github.com/user-attachments/assets/e4c12738-d5f2-4761-ae3a-0d7859e93eeb)
+```
+dt.info()
+```
+![image](https://github.com/SanjithaBolisetti/EXNO2DS/assets/119393633/8bde848f-e44f-44a9-ac0f-e259f11c65a7)
 
-![Screenshot 2024-09-03 181614](https://github.com/user-attachments/assets/39b9187c-f8c1-4879-8e70-30e5c344e4d8)
+```
+dt.set_index('PassengerId',inplace=True)
+dt.describe()
+```
 
-![Screenshot 2024-09-03 181623](https://github.com/user-attachments/assets/5e90b98f-868c-492e-88cf-0f321d4d2271)
+![image](https://github.com/SanjithaBolisetti/EXNO2DS/assets/119393633/813b0217-8139-4f0f-bb4c-7cef93046ca5)
 
-![Screenshot 2024-09-03 181631](https://github.com/user-attachments/assets/e0046acd-c59c-4173-a7b0-dfef725579b9)
-![Screenshot 2024-09-03 181653](https://github.com/user-attachments/assets/f6ad6361-4e64-48c4-af22-0c8d3eed26c3)
-![Screenshot 2024-09-03 181701](https://github.com/user-attachments/assets/8beb563a-0e1d-4d1e-8338-eac50a8db5c4)
-![Screenshot 2024-09-03 181711](https://github.com/user-attachments/assets/ec2615bb-d7e5-45b0-a477-efef61447879)
-![Screenshot 2024-09-03 181725](https://github.com/user-attachments/assets/64f17aa4-9068-4116-b87c-a1217bc86822)
+```
+dt.shape
+```
+
+![image](https://github.com/SanjithaBolisetti/EXNO2DS/assets/119393633/fe9f5eef-962b-4984-9f62-0928129a36d6)
+
+```
+dt.nunique()
+```
+
+![image](https://github.com/SanjithaBolisetti/EXNO2DS/assets/119393633/428f6980-9a18-48f0-9c0a-cc1f8090bee1)
+
+```
+dt["Survived"].value_counts()
+```
+
+![image](https://github.com/SanjithaBolisetti/EXNO2DS/assets/119393633/6b13cbf2-e40f-477b-854c-6b035f60eb08)
+
+```
+per=(dt["Survived"].value_counts()/dt.shape[0]*100).round(2)
+per
+```
+
+![image](https://github.com/SanjithaBolisetti/EXNO2DS/assets/119393633/c6951eef-9034-4f9f-9f1a-8724a018dbea)
+
+```
+sns.countplot(data=dt,x="Survived")
+```
+
+![image](https://github.com/SanjithaBolisetti/EXNO2DS/assets/119393633/07df1378-7f18-4d9d-b891-2f839ccb05b0)
+
+```
+dt.Pclass.unique()
+```
+
+![image](https://github.com/SanjithaBolisetti/EXNO2DS/assets/119393633/c421cbe0-9718-48cf-812a-266a17c27ff9)
+
+```
+dt.rename(columns={'Sex':'Gender'},inplace=True)
+dt
+```
+
+![image](https://github.com/SanjithaBolisetti/EXNO2DS/assets/119393633/76377e69-143a-4fdf-937a-d3d0260ad75b)
+
+```
+sns.catplot(x="Gender",col="Survived",kind="count",data=dt,height=5,aspect=.7)
+```
+
+![image](https://github.com/SanjithaBolisetti/EXNO2DS/assets/119393633/5269a77c-0399-4250-aec3-228d0ab6d31c)
+
+```
+sns.catplot(x='Survived',hue="Gender",data=dt,kind="count")
+```
+
+![image](https://github.com/SanjithaBolisetti/EXNO2DS/assets/119393633/cf409002-66a2-49c1-bab9-daed33d5d5f9)
+
+```
+dt.boxplot(column="Age",by="Survived")
+```
+
+![image](https://github.com/SanjithaBolisetti/EXNO2DS/assets/119393633/7de0dd77-83ba-47c1-aac4-292b6f552717)
+
+```
+sns.scatterplot(x=dt["Age"],y=dt["Fare"])
+```
+
+![image](https://github.com/SanjithaBolisetti/EXNO2DS/assets/119393633/f44a4475-948b-4070-87e8-5b5c1cf03ea6)
+
+```
+sns.jointplot(x=dt["Age"],y=dt["Fare"],data=dt)
+```
+
+![image](https://github.com/SanjithaBolisetti/EXNO2DS/assets/119393633/73f0aaf9-cd78-411c-b8af-5e857c0db614)
+
+```
+fig,ax1=plt.subplots(figsize=(8,5))
+pt=sns.boxplot(ax=ax1,x='Pclass',y='Age',hue='Gender',data=dt)
+```
+
+![image](https://github.com/SanjithaBolisetti/EXNO2DS/assets/119393633/8b2d554b-a089-4e15-8b76-29f26fe6f40f)
+
+```
+sns.catplot(data=dt,col="Survived",x="Gender",hue="Pclass",kind="count")
+```
+
+![image](https://github.com/SanjithaBolisetti/EXNO2DS/assets/119393633/570d378c-9f74-4ec8-9a20-df375e105912)
+
+```
+corr=dt.corr()
+sns.heatmap(corr,annot=True)
+```
+
+![image](https://github.com/SanjithaBolisetti/EXNO2DS/assets/119393633/4b2293e7-e5d7-41fe-b0b1-64c59e5cfd49)
+
+```
+sns.pairplot(dt)
+```
+
+![image](https://github.com/SanjithaBolisetti/EXNO2DS/assets/119393633/4de84806-e138-419d-b9d9-776f376baff5)
+
+![image](https://github.com/SanjithaBolisetti/EXNO2DS/assets/119393633/b3426fc2-b11f-4178-a30e-064d6f3a37a3)
 
 # RESULT
-        Thus the Exploratory Data Analysis on the given data set is successfully done.
+Thus,Data Analyzing of the given dataset was successful.
